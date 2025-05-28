@@ -1,2 +1,1 @@
-export * from './create-error-group.dto';
-export * from './update-error-group.dto';
+export * from './get-error-groups-query.dto';

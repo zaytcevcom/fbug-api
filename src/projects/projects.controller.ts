@@ -10,14 +10,17 @@ import {
   Headers,
 } from '@nestjs/common';
 import { ProjectsService } from './projects.service';
-import { CreateProjectDto, UpdateProjectDto } from './dto';
+import { CreateProjectDto, GetProjectsQueryDto, UpdateProjectDto } from './dto';
 
 @Controller('v1/projects')
 export class ProjectsController {
   constructor(private readonly projectsService: ProjectsService) {}
 
   @Get()
-  getAll(@Query() query: any, @Headers('authorization') auth: string) {
+  getAll(
+    @Query() query: GetProjectsQueryDto,
+    @Headers('authorization') auth: string,
+  ) {
     return this.projectsService.getAll(query, auth);
   }
 

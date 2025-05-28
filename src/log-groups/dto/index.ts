@@ -1,2 +1,1 @@
-export * from './create-log-group.dto';
-export * from './update-log-group.dto';
+export * from './get-log-groups-query.dto';

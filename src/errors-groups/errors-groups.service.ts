@@ -1,49 +1,26 @@
 import { Injectable } from '@nestjs/common';
 import { HttpService } from '@nestjs/axios';
-import { CreateErrorGroupDto, UpdateErrorGroupDto } from './dto';
 import { BASE_URL } from '../shared/constants';
 import { request } from '../shared/request';
+import { ErrorGroupEntity } from '../shared/interfaces/errors.interface';
+import { GetErrorGroupsQueryDto } from './dto';
 
 @Injectable()
 export class ErrorsGroupsService {
   constructor(private readonly httpService: HttpService) {}
 
-  async getAll(params: any, auth: string) {
-    return request(() =>
+  async getAll(query: GetErrorGroupsQueryDto, auth: string) {
+    return request<ErrorGroupEntity[]>(() =>
       this.httpService.get(`${BASE_URL}/v1/error-groups`, {
-        params,
-        headers: { Authorization: auth },
-      }),
-    );
-  }
-
-  async create(dto: CreateErrorGroupDto, auth: string) {
-    return request(() =>
-      this.httpService.post(`${BASE_URL}/v1/error-groups`, dto, {
+        params: query,
         headers: { Authorization: auth },
       }),
     );
   }
 
   async getById(id: string, auth: string) {
-    return request(() =>
+    return request<ErrorGroupEntity>(() =>
       this.httpService.get(`${BASE_URL}/v1/error-groups/${id}`, {
-        headers: { Authorization: auth },
-      }),
-    );
-  }
-
-  async update(id: string, dto: UpdateErrorGroupDto, auth: string) {
-    return request(() =>
-      this.httpService.put(`${BASE_URL}/v1/error-groups/${id}`, dto, {
-        headers: { Authorization: auth },
-      }),
-    );
-  }
-
-  async delete(id: string, auth: string) {
-    return request(() =>
-      this.httpService.delete(`${BASE_URL}/v1/error-groups/${id}`, {
         headers: { Authorization: auth },
       }),
     );
